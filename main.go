@@ -11,10 +11,9 @@ import (
 )
 
 type Parameter struct {
-	Bangun  string `json:"bangun"`
-	Panjang int    `json:"panjang"`
-	Lebar   int    `json:"lebar"`
-	Tinggi  int    `json:"tinggi"`
+	Panjang int `json:"panjang"`
+	Lebar   int `json:"lebar"`
+	Tinggi  int `json:"tinggi"`
 }
 
 type Hasil struct {
@@ -30,6 +29,14 @@ func main() {
 
 func (p *Parameter) RumusVolume() int {
 	return p.Panjang * p.Lebar * p.Tinggi
+}
+
+func (p *Parameter) cekbangun() string {
+	if p.Panjang == p.Lebar && p.Lebar == p.Tinggi {
+		return "kubus"
+	} else {
+		return "balok"
+	}
 }
 
 func Volume(w http.ResponseWriter, r *http.Request) {
@@ -55,7 +62,7 @@ func Volume(w http.ResponseWriter, r *http.Request) {
 	}
 	for _, v := range parameter {
 		hasilHitung = append(hasilHitung, Hasil{
-			Bangun: v.Bangun,
+			Bangun: v.cekbangun(),
 			Volume: v.RumusVolume(),
 		})
 	}
